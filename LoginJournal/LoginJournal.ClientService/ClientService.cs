@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using Microsoft.Win32;
 using System.Security.Principal;
 using Journal;
+using System.Configuration;
 
 namespace LoginJournal.ClientService
 {
@@ -20,7 +21,8 @@ namespace LoginJournal.ClientService
         {
             get
             {
-                return System.Configuration.ConfigurationManager.AppSettings["journalFolder"] ?? "";
+                ConfigurationManager.RefreshSection("appSettings");
+                return ConfigurationManager.AppSettings["journalFolder"] ?? "";
             }
         }
 

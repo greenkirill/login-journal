@@ -38,21 +38,30 @@ namespace Journal
         {
             Directory.CreateDirectory(folderPath);
         }
-        private static void CreateFileIfNotExists(string filePath)
+        private static void CreateFileIfNotExists(string folderPath)
         {
-            if (!File.Exists(filePath))
-            {
-                File.Create(filePath);
-            }
+            //using (var fileStream = new FileStream(path, FileMode.Create, FileAccess.Write))
+            //{
+            //    fileStream.Flush();
+            //    file
+            //}
         }
-
         private static void write_log(string filepath, string message)
         {
-            CreateFileIfNotExists(filepath);
-            using(var sw = new StreamWriter(filepath, true))
+            if (!File.Exists(filepath))
             {
-                sw.WriteLine(message);
-                sw.Close();
+                File.Create(filepath).Close();
+                File.WriteAllText(filepath, message + "\n");
+            }
+            else
+            { 
+                using (var sw = new StreamWriter(filepath, true))
+                {
+                    sw.WriteLine(message);
+                    sw.Flush();
+                    sw.Close();
+                    sw.Dispose();
+                }
             }
         }
     }

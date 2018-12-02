@@ -1,6 +1,7 @@
 ﻿using Journal;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Security.Principal;
@@ -30,11 +31,26 @@ namespace ConsoleTest
         }
         static void Main(string[] args)
         {
-            var ji = new JournalItem(DateTime.Now, JournalItem.EventType.ВХОД, "asd", Environment.MachineName);
-            Console.WriteLine(ji);
-            var newj = JournalItem.StringToJournalItem(ji.ToString());
-            Console.WriteLine(newj);
-            Console.ReadKey();
+            if (!File.Exists("./file.txt"))
+            {
+                using (var sw = new StreamWriter("./file.txt", true))
+                {
+                    sw.WriteLine(",,,");
+                }
+            }
+            else
+            {
+
+                using (var sw = new StreamWriter("./file.txt", true))
+                {
+                    sw.WriteLine(",,asd,");
+                }
+            }
+            //var ji = new JournalItem(DateTime.Now, JournalItem.EventType.ВХОД, "asd", Environment.MachineName);
+            //Console.WriteLine(ji);
+            //var newj = JournalItem.StringToJournalItem(ji.ToString());
+            //Console.WriteLine(newj);
+            //Console.ReadKey();
         }
     }
 }
