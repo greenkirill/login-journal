@@ -15,6 +15,13 @@ namespace JournalViewer
         public Form1()
         {
             InitializeComponent();
+            var viewer = new Journal.JournalViewer(@"C:\Users\kirill.gribkov\Documents\LJ\folder");
+            var items = viewer.GetAllJournals();
+            var view_items = Journal.JournalViewer.ItemToView(items);
+            foreach (var item in view_items)
+            {
+                journalItemViewBindingSource.Add(item);
+            }
         }
     }
 }

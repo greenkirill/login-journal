@@ -245,7 +245,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Installer"
         "ProductCode" = "8:{4AF88D42-CCC2-4C8C-AD3B-FD135987BA24}"
-        "PackageCode" = "8:{9BD7C70E-CB12-4A2E-9CEB-C8FE66FF5502}"
+        "PackageCode" = "8:{75670331-A9AD-4A07-B28D-E0389C9DB48B}"
         "UpgradeCode" = "8:{1BB7244B-55A1-492A-B9F9-1ED76E859178}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"

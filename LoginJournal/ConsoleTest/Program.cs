@@ -31,26 +31,15 @@ namespace ConsoleTest
         }
         static void Main(string[] args)
         {
-            if (!File.Exists("./file.txt"))
-            {
-                using (var sw = new StreamWriter("./file.txt", true))
-                {
-                    sw.WriteLine(",,,");
-                }
-            }
-            else
-            {
-
-                using (var sw = new StreamWriter("./file.txt", true))
-                {
-                    sw.WriteLine(",,asd,");
-                }
-            }
+            var q = new Journal.JournalViewer(@"C:\Users\kirill.gribkov\Documents\LJ\folder");
+            var jj = q.GetAllJournals();
             //var ji = new JournalItem(DateTime.Now, JournalItem.EventType.ВХОД, "asd", Environment.MachineName);
             //Console.WriteLine(ji);
             //var newj = JournalItem.StringToJournalItem(ji.ToString());
             //Console.WriteLine(newj);
-            //Console.ReadKey();
+            Console.WriteLine(DateTime.Now.ToString("ddMMyyyy"));
+            Console.ReadKey();
+
         }
     }
 }

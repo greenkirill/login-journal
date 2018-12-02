@@ -43,6 +43,8 @@
   <ItemGroup>
     <Compile Include="Journal.cs" />
     <Compile Include="Journalitem.cs" />
+    <Compile Include="JournalItem_View.cs" />
+    <Compile Include="JournalViewer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
