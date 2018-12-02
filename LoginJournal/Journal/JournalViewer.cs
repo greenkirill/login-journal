@@ -71,7 +71,7 @@ namespace Journal
             //var tmp = new List<JournalItem_View>();
             foreach (var item in jis)
             {
-                var key = item.date.ToString("ddMMyyyy") + item.username + item.machineName;
+                var key = item.username + item.machineName;
                 if (item.eventType == JournalItem.EventType.ВХОД)
                 {
                     tmp.Add(key, item);
@@ -85,7 +85,7 @@ namespace Journal
                     }
                     else
                     {
-                        res.Add(ItemToToView(item));
+                        //res.Add(ItemToToView(item));
                     }
                 }
             }
