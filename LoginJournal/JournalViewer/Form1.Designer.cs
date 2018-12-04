@@ -34,7 +34,13 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dateTimePickerFrom = new System.Windows.Forms.DateTimePicker();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dateViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TimeView = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.durationViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.machineViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.nameViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.purposeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.journalItemViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.comboBoxMachine = new System.Windows.Forms.ComboBox();
@@ -43,12 +49,6 @@
             this.label4 = new System.Windows.Forms.Label();
             this.dateTimePickerTo = new System.Windows.Forms.DateTimePicker();
             this.button2 = new System.Windows.Forms.Button();
-            this.dateViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.durationViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.machineViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.nameViewDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.purposeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.journalItemViewBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.journalItemViewBindingSource)).BeginInit();
             this.SuspendLayout();
@@ -77,6 +77,7 @@
             this.dateTimePickerFrom.Name = "dateTimePickerFrom";
             this.dateTimePickerFrom.Size = new System.Drawing.Size(300, 20);
             this.dateTimePickerFrom.TabIndex = 2;
+            this.dateTimePickerFrom.ValueChanged += new System.EventHandler(this.dateTimePickerFrom_ValueChanged);
             // 
             // dataGridView1
             // 
@@ -98,12 +99,54 @@
             this.dataGridView1.Size = new System.Drawing.Size(843, 387);
             this.dataGridView1.TabIndex = 3;
             // 
+            // dateViewDataGridViewTextBoxColumn
+            // 
+            this.dateViewDataGridViewTextBoxColumn.DataPropertyName = "dateView";
+            this.dateViewDataGridViewTextBoxColumn.HeaderText = "Дата";
+            this.dateViewDataGridViewTextBoxColumn.Name = "dateViewDataGridViewTextBoxColumn";
+            this.dateViewDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
             // TimeView
             // 
             this.TimeView.DataPropertyName = "TimeView";
             this.TimeView.HeaderText = "Время";
             this.TimeView.Name = "TimeView";
             this.TimeView.ReadOnly = true;
+            // 
+            // durationViewDataGridViewTextBoxColumn
+            // 
+            this.durationViewDataGridViewTextBoxColumn.DataPropertyName = "durationView";
+            this.durationViewDataGridViewTextBoxColumn.HeaderText = "Продолжительность";
+            this.durationViewDataGridViewTextBoxColumn.Name = "durationViewDataGridViewTextBoxColumn";
+            this.durationViewDataGridViewTextBoxColumn.ReadOnly = true;
+            this.durationViewDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // machineViewDataGridViewTextBoxColumn
+            // 
+            this.machineViewDataGridViewTextBoxColumn.DataPropertyName = "machineView";
+            this.machineViewDataGridViewTextBoxColumn.HeaderText = "Компьютер";
+            this.machineViewDataGridViewTextBoxColumn.Name = "machineViewDataGridViewTextBoxColumn";
+            this.machineViewDataGridViewTextBoxColumn.ReadOnly = true;
+            this.machineViewDataGridViewTextBoxColumn.Width = 150;
+            // 
+            // nameViewDataGridViewTextBoxColumn
+            // 
+            this.nameViewDataGridViewTextBoxColumn.DataPropertyName = "nameView";
+            this.nameViewDataGridViewTextBoxColumn.HeaderText = "Пользователь";
+            this.nameViewDataGridViewTextBoxColumn.Name = "nameViewDataGridViewTextBoxColumn";
+            this.nameViewDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // purposeDataGridViewTextBoxColumn
+            // 
+            this.purposeDataGridViewTextBoxColumn.DataPropertyName = "purpose";
+            this.purposeDataGridViewTextBoxColumn.HeaderText = "Цель";
+            this.purposeDataGridViewTextBoxColumn.Name = "purposeDataGridViewTextBoxColumn";
+            this.purposeDataGridViewTextBoxColumn.ReadOnly = true;
+            this.purposeDataGridViewTextBoxColumn.Width = 200;
+            // 
+            // journalItemViewBindingSource
+            // 
+            this.journalItemViewBindingSource.DataSource = typeof(Journal.JournalItem_View);
             // 
             // label1
             // 
@@ -165,6 +208,7 @@
             this.dateTimePickerTo.Name = "dateTimePickerTo";
             this.dateTimePickerTo.Size = new System.Drawing.Size(300, 20);
             this.dateTimePickerTo.TabIndex = 10;
+            this.dateTimePickerTo.ValueChanged += new System.EventHandler(this.dateTimePickerTo_ValueChanged);
             // 
             // button2
             // 
@@ -172,51 +216,9 @@
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(140, 23);
             this.button2.TabIndex = 11;
-            this.button2.Text = "Применить фильтр";
+            this.button2.Text = "Обновить";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // dateViewDataGridViewTextBoxColumn
-            // 
-            this.dateViewDataGridViewTextBoxColumn.DataPropertyName = "dateView";
-            this.dateViewDataGridViewTextBoxColumn.HeaderText = "Дата";
-            this.dateViewDataGridViewTextBoxColumn.Name = "dateViewDataGridViewTextBoxColumn";
-            this.dateViewDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // durationViewDataGridViewTextBoxColumn
-            // 
-            this.durationViewDataGridViewTextBoxColumn.DataPropertyName = "durationView";
-            this.durationViewDataGridViewTextBoxColumn.HeaderText = "Продолжительность";
-            this.durationViewDataGridViewTextBoxColumn.Name = "durationViewDataGridViewTextBoxColumn";
-            this.durationViewDataGridViewTextBoxColumn.ReadOnly = true;
-            this.durationViewDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // machineViewDataGridViewTextBoxColumn
-            // 
-            this.machineViewDataGridViewTextBoxColumn.DataPropertyName = "machineView";
-            this.machineViewDataGridViewTextBoxColumn.HeaderText = "Компьютер";
-            this.machineViewDataGridViewTextBoxColumn.Name = "machineViewDataGridViewTextBoxColumn";
-            this.machineViewDataGridViewTextBoxColumn.ReadOnly = true;
-            this.machineViewDataGridViewTextBoxColumn.Width = 150;
-            // 
-            // nameViewDataGridViewTextBoxColumn
-            // 
-            this.nameViewDataGridViewTextBoxColumn.DataPropertyName = "nameView";
-            this.nameViewDataGridViewTextBoxColumn.HeaderText = "Пользователь";
-            this.nameViewDataGridViewTextBoxColumn.Name = "nameViewDataGridViewTextBoxColumn";
-            this.nameViewDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // purposeDataGridViewTextBoxColumn
-            // 
-            this.purposeDataGridViewTextBoxColumn.DataPropertyName = "purpose";
-            this.purposeDataGridViewTextBoxColumn.HeaderText = "Цель";
-            this.purposeDataGridViewTextBoxColumn.Name = "purposeDataGridViewTextBoxColumn";
-            this.purposeDataGridViewTextBoxColumn.ReadOnly = true;
-            this.purposeDataGridViewTextBoxColumn.Width = 200;
-            // 
-            // journalItemViewBindingSource
-            // 
-            this.journalItemViewBindingSource.DataSource = typeof(Journal.JournalItem_View);
             // 
             // Form1
             // 

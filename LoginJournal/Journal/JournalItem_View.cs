@@ -76,5 +76,6 @@ namespace Journal {
             }
         }
         public string purpose { get; set; }
+        public bool isValid{ get; set; }
     }
 }

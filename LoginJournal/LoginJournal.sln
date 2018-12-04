@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JournalViewer", "JournalVie
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ClientJournalInstall", "ClientJournalInstall\ClientJournalInstall.vdproj", "{86A8352B-BBA0-403D-9413-3FA79E6968AC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurposeChooser", "PurposeChooser\PurposeChooser.csproj", "{614C8E44-C682-4C48-9B23-C3D887B225DF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +39,10 @@ Global
 		{1C5A9566-6045-4E49-9967-4D4F599899D1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{86A8352B-BBA0-403D-9413-3FA79E6968AC}.Debug|Any CPU.ActiveCfg = Debug
 		{86A8352B-BBA0-403D-9413-3FA79E6968AC}.Release|Any CPU.ActiveCfg = Release
+		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

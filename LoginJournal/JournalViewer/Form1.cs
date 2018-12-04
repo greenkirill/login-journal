@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace JournalViewer {
@@ -58,10 +52,12 @@ namespace JournalViewer {
         }
 
         private bool machineCheck(string machine) {
-            return comboBoxMachine.SelectedText == "Все" || comboBoxMachine.SelectedText == "" || comboBoxMachine.SelectedText == machine;
+            string v = comboBoxMachine.SelectedIndex >= 0 ? comboBoxMachine.Items[comboBoxMachine.SelectedIndex] as string : "";
+            return v == "Все" || v == "" || v == machine;
         }
-        private bool userCheck(string machine) {
-            return comboBoxUser.SelectedText == "Все" || comboBoxUser.SelectedText == "" || comboBoxUser.SelectedText == machine;
+        private bool userCheck(string username) {
+            string v = comboBoxUser.SelectedIndex >= 0 ? comboBoxUser.Items[comboBoxUser.SelectedIndex] as string : "";
+            return v == "Все" || v == "" || v == username;
         }
         private bool dateCheck(DateTime from, DateTime to) {
             var newto = dateTimePickerTo.Value.Date.AddDays(1);
@@ -132,6 +128,14 @@ namespace JournalViewer {
         }
 
         private void button2_Click(object sender, EventArgs e) {
+            reinitGrid();
+        }
+
+        private void dateTimePickerFrom_ValueChanged(object sender, EventArgs e) {
+            reinitGrid();
+        }
+
+        private void dateTimePickerTo_ValueChanged(object sender, EventArgs e) {
             reinitGrid();
         }
     }
