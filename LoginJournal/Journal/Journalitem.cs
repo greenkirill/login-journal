@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Journal
 {
@@ -49,22 +46,31 @@ namespace Journal
 
         public static JournalItem StringToJournalItem(string line)
         {
-            var _date = line.Substring(0, 30).Trim();
-            var _eventType = line.Substring(30, 10).Trim();
-            var username = line.Substring(40, 20).Trim();
-            var machineName = line.Substring(60, 20).Trim();
-            var hash = line.Substring(81, 64).Trim();
-            var purpose = line.Substring(145).Trim();
-            DateTime date;
-            if (!DateTime.TryParse(_date, CultureInfo.CreateSpecificCulture("ru-RU"), DateTimeStyles.None, out date))
+            var _date = "";
+            var _eventType = "";
+            var username = "";
+            var machineName = "";
+            var hash = "";
+            var purpose = "";
+            DateTime date = DateTime.Now;
+            EventType eventType = EventType.ВХОД;
+            try
             {
-                throw new FormatException(_date);
-            }
-            EventType eventType;
-            if (!Enum.TryParse(_eventType, out eventType))
-            {
-                throw new FormatException(_eventType);
-            }
+                _date = line.Substring(0, 30).Trim();
+                _eventType = line.Substring(30, 10).Trim();
+                username = line.Substring(40, 20).Trim();
+                machineName = line.Substring(60, 20).Trim();
+                hash = line.Substring(81, 64).Trim();
+                purpose = line.Substring(145).Trim();
+                if (!DateTime.TryParse(_date, CultureInfo.CreateSpecificCulture("ru-RU"), DateTimeStyles.None, out date))
+                {
+                    throw new FormatException(_date);
+                }
+                if (!Enum.TryParse(_eventType, out eventType))
+                {
+                    throw new FormatException(_eventType);
+                }
+            }catch (Exception e) { }
             return new JournalItem(date, eventType, username, machineName, hash, purpose);
         }
 

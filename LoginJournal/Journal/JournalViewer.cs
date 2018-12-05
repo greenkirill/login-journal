@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Journal
 {
@@ -34,18 +32,23 @@ namespace Journal
         public List<JournalItem> TLItems(string path)
         {
             var res = new List<JournalItem>();
-            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
-            using (var sr = new StreamReader(fs))
+            try
             {
-                string nl;
-                while((nl = sr.ReadLine())!=null)
+                using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read))
+                using (var sr = new StreamReader(fs))
                 {
-                    try
+                    string nl;
+                    while ((nl = sr.ReadLine()) != null)
                     {
-                        res.Add(JournalItem.StringToJournalItem(nl));
-                    }catch (Exception e) { }
+                        try
+                        {
+                            res.Add(JournalItem.StringToJournalItem(nl));
+                        }
+                        catch (Exception e) { }
+                    }
                 }
             }
+            catch (Exception e) { }
             return res;
         }
 
@@ -55,9 +58,9 @@ namespace Journal
             var res = new List<JournalItem>();
             foreach (var folder in FLDirectories(path))
             {
-                foreach(var file in SLFiles(folder))
+                foreach (var file in SLFiles(folder))
                 {
-                    res = res.Concat(TLItems(file.FullName)).ToList() ;
+                    res = res.Concat(TLItems(file.FullName)).ToList();
                 }
             }
             return res;
@@ -71,21 +74,76 @@ namespace Journal
             //var tmp = new List<JournalItem_View>();
             foreach (var item in jis)
             {
-                var key = item.machineName;
-                if (item.eventType == JournalItem.EventType.ВХОД)
+                try
                 {
-                    tmp.Add(key, item);
-                }
-                else if(item.eventType == JournalItem.EventType.ВЫХОД)
-                {
-                    if (tmp.ContainsKey(key))
+                    var key = item.machineName;
+                    if (item.eventType == JournalItem.EventType.ВХОД)
                     {
-                        res.Add(ItemsToView(tmp[key], item));
-                        tmp.Remove(key);
+                        tmp.Add(key, item);
                     }
-                    else
+                    else if (item.eventType == JournalItem.EventType.ВЫХОД)
                     {
-                        //res.Add(ItemToToView(item));
+                        if (tmp.ContainsKey(key))
+                        {
+                            res.Add(ItemsToView(tmp[key], item));
+                            tmp.Remove(key);
+                        }
+                        else
+                        {
+                            //res.Add(ItemToToView(item));
+                        }
+                    }
+                }
+                catch (Exception e) { }
+            }
+            return res;
+        }
+        public static List<JournalItem_View> ItemToView(List<JournalItem> jis, namemap namemap, pcmap pcmap)
+        {
+            var tmp = new Dictionary<string, JournalItem>();
+            jis.Sort();
+            var res = new List<JournalItem_View>();
+            //var tmp = new List<JournalItem_View>();
+            foreach (var item in jis)
+            {
+                try
+                {
+                    var key = item.machineName;
+                    if (item.eventType == JournalItem.EventType.ВХОД)
+                    {
+                        tmp.Add(key, item);
+                    }
+                    else if (item.eventType == JournalItem.EventType.ВЫХОД)
+                    {
+                        if (tmp.ContainsKey(key))
+                        {
+                            res.Add(ItemsToView(tmp[key], item, namemap, pcmap));
+                            tmp.Remove(key);
+                        }
+                        else
+                        {
+                            //res.Add(ItemToToView(item));
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    var key = item.machineName;
+                    if (item.eventType == JournalItem.EventType.ВХОД)
+                    {
+                        tmp.Add(key, item);
+                    }
+                    else if (item.eventType == JournalItem.EventType.ВЫХОД)
+                    {
+                        if (tmp.ContainsKey(key))
+                        {
+                            res.Add(ItemsToView(tmp[key], item));
+                            tmp.Remove(key);
+                        }
+                        else
+                        {
+                            //res.Add(ItemToToView(item));
+                        }
                     }
                 }
             }
@@ -94,27 +152,60 @@ namespace Journal
 
         public static JournalItem_View ItemsToView(JournalItem from, JournalItem to)
         {
-            return new JournalItem_View() {
-                from = from.date,
-                to = to.date,
-                duration = to.date - from.date,
-                machineName = from.machineName,
-                username = from.username,
-                RealName = "",
-                purpose = from.purpose,
-                isValid = from.isValid && to.isValid
-            };
+            var ret = new JournalItem_View();
+            try
+            {
+                ret = new JournalItem_View()
+                {
+                    from = from.date,
+                    to = to.date,
+                    duration = to.date - from.date,
+                    machineName = from.machineName,
+                    username = from.username,
+                    RealName = "",
+                    purpose = from.purpose,
+                    isValid = from.isValid && to.isValid
+                };
+            }
+            catch (Exception e) { }
+            return ret;
+        }
+        public static JournalItem_View ItemsToView(JournalItem from, JournalItem to, namemap namemap, pcmap pcmap)
+        {
+            var ret = new JournalItem_View();
+            try
+            {
+                ret = new JournalItem_View()
+                {
+                    from = from.date,
+                    to = to.date,
+                    duration = to.date - from.date,
+                    machineName = pcmap.GetViewName(from.machineName),
+                    username = namemap.GetName(from.username),
+                    RealName = "",
+                    purpose = from.purpose,
+                    isValid = from.isValid && to.isValid
+                };
+            }
+            catch (Exception e) { }
+            return ret;
         }
         public static JournalItem_View ItemToToView(JournalItem to)
         {
-            return new JournalItem_View()
+            var ret = new JournalItem_View();
+            try
             {
-                to = to.date,
-                machineName = to.machineName,
-                username = to.username,
-                RealName = "",
-                purpose = to.purpose
-            };
+                ret = new JournalItem_View()
+                {
+                    to = to.date,
+                    machineName = to.machineName,
+                    username = to.username,
+                    RealName = "",
+                    purpose = to.purpose
+                };
+            }
+            catch (Exception e) { }
+            return ret;
         }
     }
 }
