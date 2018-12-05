@@ -73,7 +73,7 @@ namespace LoginJournal.ClientService
             //catch (Exception e) { eventLog1.WriteEntry(e.ToString(), EventLogEntryType.Error); }
             try
             {
-                ProcessExtensions.StartProcessAsCurrentUser(@"C:\Users\kirill.gribkov\Documents\LJ\login-journal\LoginJournal\ConsoleTest\bin\Debug\ConsoleTest.exe", @"""C:\Users\kirill.gribkov\Documents\LJ\login-journal\LoginJournal\ConsoleTest\bin\Debug\ConsoleTest.exe"" " + str);
+                //ProcessExtensions.StartProcessAsCurrentUser(@"C:\Users\kirill.gribkov\Documents\LJ\login-journal\LoginJournal\ConsoleTest\bin\Debug\ConsoleTest.exe", @"""C:\Users\kirill.gribkov\Documents\LJ\login-journal\LoginJournal\ConsoleTest\bin\Debug\ConsoleTest.exe"" " + str);
                 //ProcessExtensions.StartProcessAsCurrentUser(@"notepad");
             }
             catch (Exception e) { eventLog1.WriteEntry(e.ToString(), EventLogEntryType.Error); }

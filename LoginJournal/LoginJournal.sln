@@ -15,6 +15,8 @@ Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "ClientJournalInstall", "Cli
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PurposeChooser", "PurposeChooser\PurposeChooser.csproj", "{614C8E44-C682-4C48-9B23-C3D887B225DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AdminService", "AdminService\AdminService.csproj", "{09115F2A-63A1-41A0-9243-260D7C9943FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,10 @@ Global
 		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{614C8E44-C682-4C48-9B23-C3D887B225DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09115F2A-63A1-41A0-9243-260D7C9943FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09115F2A-63A1-41A0-9243-260D7C9943FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09115F2A-63A1-41A0-9243-260D7C9943FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09115F2A-63A1-41A0-9243-260D7C9943FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
