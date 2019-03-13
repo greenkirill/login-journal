@@ -12,6 +12,8 @@ using Microsoft.Win32;
 using System.Security.Principal;
 using Journal;
 using System.Configuration;
+using System.ServiceModel.Description;
+using System.ServiceModel;
 
 namespace LoginJournal.ClientService
 {
@@ -25,6 +27,25 @@ namespace LoginJournal.ClientService
                 return ConfigurationManager.AppSettings["journalFolder"] ?? "";
             }
         }
+        private bool isAdmin
+        {
+            get
+            {
+                ConfigurationManager.RefreshSection("appSettings");
+                bool res = false;
+                bool.TryParse(ConfigurationManager.AppSettings["isAdmin"], out res);
+                return res;
+            }
+        }
+        private string AdminEndpoint
+        {
+            get
+            {
+                ConfigurationManager.RefreshSection("appSettings");
+                return ConfigurationManager.AppSettings["adminEndpoint"] ?? "";
+            }
+        }
+        private ServiceHost adminHost;
 
         private string CurrentUser
         {
@@ -223,10 +244,91 @@ namespace LoginJournal.ClientService
                 return builder.ToString();
             }
         }
+        private void ALLTASK()
+        {
+            AdminServiceSS();
+            SendToAdmin();
+        }
+
+        private void AdminServiceSS()
+        {
+            try
+            {
+                if (isAdmin)
+                {
+                    if (adminHost == null)
+                    {
+                        adminHost = new ServiceHost(typeof(AdminService));
+                        adminHost.Open();
+                    }
+                }
+                else
+                {
+                    if (adminHost != null)
+                    {
+                        adminHost.Close();
+                        adminHost = null;
+                    }
+                }
+            }
+            catch (Exception e) { }
+        }
+
+        private void SendToAdmin()
+        {
+            if (isAdmin)
+                return;
+            try
+            {
+                NetTcpBinding netTcpBinding = new NetTcpBinding();
+                var endpoint = new EndpointAddress(AdminEndpoint);
+                using (var channelFactory = new ChannelFactory<IAdminService>(netTcpBinding, endpoint))
+                {
+                    IAdminService service = channelFactory.CreateChannel(endpoint);
+                    var tarInfos = service.GetCountByMachineByMonth(Environment.MachineName);
+                    var curInfos = GetJournalInfos();
+                    var newInfos = tarInfos.Where(x => !curInfos.Contains(x));
+                    service.SendJournal(GetByInfos(newInfos));
+                }
+            }
+            catch (Exception e) { }
+        }
+
+        private List<JournalInfo> GetJournalInfos()
+        {
+            var res = new List<JournalInfo>();
+
+            var jw = new JournalViewer(journalForlder);
+            foreach (var y in jw.GetAllJournals().Where(x => x.machineName == Environment.MachineName).GroupBy(x => x.date.Year))
+            {
+                foreach (var m in y.GroupBy(x => x.date.Month))
+                {
+                    res.Add(new JournalInfo { Year = y.Key, Month = m.Key, Count = m.Count() });
+                }
+            }
+            return res;
+        }
+
+        private List<JournalItem> GetByInfos(IEnumerable<JournalInfo> ifs)
+        {
+            var res = new List<JournalItem>();
+            var itms = new JournalViewer(journalForlder).GetAllJournals();
+            foreach (var item in ifs)
+            {
+                res.AddRange(itms.Where(x => { return x.date.Year == item.Year && x.date.Month == item.Month; }));
+            }
+            return res;
+        }
 
         protected override void OnStart(string[] args)
         {
+            var startTimeSpan = TimeSpan.Zero;
+            var periodTimeSpan = TimeSpan.FromMinutes(5);
 
+            var timer = new System.Threading.Timer((e) =>
+            {
+                ALLTASK();
+            }, null, startTimeSpan, periodTimeSpan);
         }
 
         protected override void OnStop()

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Journal
 {
-    public class JournalItem : IComparable
+    public class JournalItem : IComparable, IEquatable<JournalItem>
     {
         public enum EventType
         {
@@ -109,6 +109,11 @@ namespace Journal
             }
             else
                 throw new NotImplementedException();
+        }
+
+        public bool Equals(JournalItem p)
+        {
+            return (this.date == p.date) && (this.eventType == p.eventType) && (this.username == p.username) && (this.machineName == p.machineName);
         }
     }
 }

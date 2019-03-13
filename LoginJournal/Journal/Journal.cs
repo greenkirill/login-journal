@@ -21,12 +21,16 @@ namespace Journal
             CreateFolderIfNotExists(specialPath);
             write_log(filePath, item.ToString());
         }
+        static object lockObj = new object();
         public static void WriteLog(JournalItem item, string folderPath)
         {
-            var specialPath = Path.GetFullPath(Path.Combine(folderPath, item.date.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("ru-RU"))));
-            var filePath = Path.GetFullPath(Path.Combine(specialPath, item.date.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("ru-RU")) + ".journal"));
-            CreateFolderIfNotExists(specialPath);
-            write_log(filePath, item.ToString());
+            lock (lockObj)
+            {
+                var specialPath = Path.GetFullPath(Path.Combine(folderPath, item.date.ToString("MMMM yyyy", CultureInfo.CreateSpecificCulture("ru-RU"))));
+                var filePath = Path.GetFullPath(Path.Combine(specialPath, item.date.ToString("d MMMM yyyy", CultureInfo.CreateSpecificCulture("ru-RU")) + ".journal"));
+                CreateFolderIfNotExists(specialPath);
+                write_log(filePath, item.ToString());
+            }
         }
 
         private static void CreateFolderIfNotExists(string folderPath)
